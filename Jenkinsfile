@@ -17,11 +17,11 @@ pipeline {
     environment {
         // Define environment variables. Use Jenkins's 'Global credentials' for sensitive data.
         // Replace 'your_registry' with your actual Docker registry (e.g., 'docker.io/yourusername', 'your-ecr-repo-url')
-        DOCKER_REGISTRY = 'docker.io/sumitrajneesh'
+        DOCKER_REGISTRY = 'your_registry' // <<<<< IMPORTANT: REPLACE THIS
         APP_NAME = 'my-flask-service'
-        # For secure Docker login, define a Jenkins 'Username with password' credential with ID 'DOCKER_HUB_CREDENTIALS'
-        # For Kubeconfig, define a Jenkins 'Secret file' credential with ID 'KUBECONFIG_SECRET'
-        # And make sure the agent has 'kubectl' configured or the Python script handles auth
+        // For secure Docker login, define a Jenkins 'Username with password' credential with ID 'DOCKER_HUB_CREDENTIALS'
+        // For Kubeconfig, define a Jenkins 'Secret file' credential with ID 'KUBECONFIG_SECRET'
+        // And make sure the agent has 'kubectl' configured or the Python script handles auth
     }
 
     stages {
@@ -106,7 +106,7 @@ pipeline {
                     // If you have K8s external IP dynamically, fetch it here.
                     // For example, if minikube service is port-forwarded: http://localhost:<port>
                     // Or if a LoadBalancer exposes it: http://<external-ip>/health
-                    def stagingUrl = "http://<YOUR_STAGING_K8S_SERVICE_IP_OR_HOSTNAME>/health" // <<< IMPORTANT: Update this URL
+                    def stagingUrl = "http://<YOUR_STAGING_K8S_SERVICE_IP_OR_HOSTNAME>/health" // <<< IMPORTANT: REPLACE THIS
                     sh "python scripts/health_check.py --url ${stagingUrl} --expected_status 200 --retries 20 --delay 10"
                 }
             }
@@ -146,7 +146,7 @@ pipeline {
                 script {
                     echo "Waiting for LoadBalancer IP for Production... (manual step or more sophisticated polling needed here)"
                     sleep 30 // Give LoadBalancer time to provision (adjust as needed)
-                    def productionUrl = "http://<YOUR_PRODUCTION_K8S_SERVICE_IP_OR_HOSTNAME>/health" // <<< IMPORTANT: Update this URL
+                    def productionUrl = "http://<YOUR_PRODUCTION_K8S_SERVICE_IP_OR_HOSTNAME>/health" // <<< IMPORTANT: REPLACE THIS
                     sh "python scripts/health_check.py --url ${productionUrl} --expected_status 200 --retries 20 --delay 10"
                 }
             }
