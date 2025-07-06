@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-flask-service
+  labels:
+    app: my-flask-service
+spec:
+  replicas: 1 # Start with 1 replica for staging, adjust for production
+  selector:
+    matchLabels:
+      app: my-flask-service
+  template:
+    metadata:
+      labels:
+        app: my-flask-service
+    spec:
+      containers:
+      - name: my-flask-service
+        image: your_registry/my-flask-service:placeholder # This will be updated by deploy_to_k8s.py
+        ports:
+        - containerPort: 5000
+        env:
+        - name: FLASK_ENV
+          value: production # Example environment variable for Flask
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
