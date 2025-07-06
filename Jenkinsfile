@@ -17,7 +17,7 @@ pipeline {
     environment {
         // Define environment variables. Use Jenkins's 'Global credentials' for sensitive data.
         // Replace 'your_registry' with your actual Docker registry (e.g., 'docker.io/yourusername', 'your-ecr-repo-url')
-        DOCKER_REGISTRY = 'your_registry'
+        DOCKER_REGISTRY = 'sumitrajneesh'
         APP_NAME = 'my-flask-service'
         # For secure Docker login, define a Jenkins 'Username with password' credential with ID 'DOCKER_HUB_CREDENTIALS'
         # For Kubeconfig, define a Jenkins 'Secret file' credential with ID 'KUBECONFIG_SECRET'
